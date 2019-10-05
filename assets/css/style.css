@@ -1,6 +1,7 @@
 
 body {
 background-color: black;
+background-image: url(/assets/images/background.jpg);
 }
 .display-4 {
     text-align: center;
