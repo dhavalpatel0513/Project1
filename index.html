@@ -1,3 +1,28 @@
+<<<<<<< HEAD
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+  var queryURL = "http://ws.audioscrobbler.com/2.0/?method=album.search&album=beyonce&api_key=4b65d4702229dfc7814d6f12bc1000d6&format=json";
+
+  $.ajax({
+    url: queryURL,
+    method: "GET"
+  }).then(function(response) {
+    console.log(response);
+    console.log(response._embedded.events[0]);
+  });
+</script>
+</body>
+=======
 
 <!-- Eric Goldstein, Karen Gertenbach, Maria Kuznetsova, Jeffrey Phelps - 
     DU Web Dev Bootcamp 2017/2018 - Week-8 Homework - Project 1 -->
@@ -157,4 +182,5 @@
 
     </body>
 
+>>>>>>> fb837bf8d78e83682bf51ff33ec809bdfd8978f0
 </html>
