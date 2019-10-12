@@ -1,22 +1,129 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>GT-Project-1-Group8</title>
-    <link
-    rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
-    <link rel="stylesheet" href="./assets/css/style.css">
-  </head>
-  <body>
-  <div class="container img">
-    <div class="jumbotron">
-      <h1 class="display-4">GT-Project-1-Group8</h1>
-      <p  class="lead">
-       It's time to make project let's do it TOGETHER!!!
-      </p>
-    </div>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>GT-Project-1-Group8</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+  <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+
+
+
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+<!-- <script type="text/javascript">
+   // constructing a queryURL variable we will use instead of the literal string inside of the ajax method
+   var queryURL = "https://api.deezer.com/album/302127"; -->
+<!-- // https://api.deezer.com/version/service/id/method/?album&key=1aca00bad4b38f88769d91e5f474b43d
+//    $.ajax({
+//      url: queryURL,
+//      method: "GET"
+//    }).then(function(response) {
+//      console.log(response);
+     
+//    });
+//  </script> -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+ <script type="text/javascript">
+   // constructing a queryURL variable we will use instead of the literal string inside of the ajax method
+   var queryURL = "https://www.googleapis.com/youtube/v3/search?part=snippet&key=AIzaSyD5YCV1hKtkUYix5yoQFs_gx9fzJV-osWs";
+  // https://app.ticketmaster.com/discovery/v2/events?apikey=nnA0eOvGriBaGMlYbDCKaOnntD9G2Ijt&locale=*
+   $.ajax({
+     url: queryURL,
+     method: "GET"
+   }).then(function(response) {
+     console.log(response);
+     
+   });
+ </script> -->
+
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script type="text/javascript">
+    // constructing a queryURL variable we will use instead of the literal string inside of the ajax method
+    var keyword = "beyonce"
+   // var queryURL = "https://app.ticketmaster.com/discovery/v2/events" + keyword + "?apikey=nnA0eOvGriBaGMlYbDCKaOnntD9G2Ijt&locale=*";
+    var queryURL = "https://app.ticketmaster.com/discovery/v2/events.json?" + keyword + "countryCode=US&apikey=nnA0eOvGriBaGMlYbDCKaOnntD9G2Ijt";
+   // https://app.ticketmaster.com/discovery/v2/events?apikey=nnA0eOvGriBaGMlYbDCKaOnntD9G2Ijt&locale=*
+  // https://app.ticketmaster.com/discovery/v2/events.json?keyword=devjam&source=universe&countryCode=US&apikey=nnA0eOvGriBaGMlYbDCKaOnntD9G2Ijt
+    $.ajax({
+      url: queryURL,
+      method: "GET"
+    }).then(function(response) {
+      console.log(response);
+      console.log(response._embedded.events[1].url);
+     
+
+    });
+
+  </script> -->
+
+<body>
+  <div class="container">
+    <h2>Basic Table</h2>
+    <p>The .table class adds basic styling (light padding and only horizontal dividers) to a table:</p>
+    <table class="table">
+      <thead>
+        <tr>
+          <!-- The scope attribute specifies that this is a header for a column -->
+          <th scope="col">Artist</th>
+          <th scope="col">Album Name</th>
+          <th scope="col">Link</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Interstellar</td>
+          <td>2014</td>
+          <td>Ellen Burstyn, Matthew McConaughey, Mackenzie Foy, John Lithgow</td>
+        </tr>
+        <!-- Insert additional movie rows here -->
+      </tbody>
+    </table>
   </div>
-  </body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script type="text/javascript">
+    var Artist = "jayz"
+    var queryURL = 'http://ws.audioscrobbler.com/2.0/?method=album.search&album=' + Artist + '&api_key=4b65d4702229dfc7814d6f12bc1000d6&format=json';
+    $.ajax({
+      url: queryURL,
+      method: "GET"
+    }).then(function (response) {
+      console.log(response);
+      console.log(response.results.albummatches.album[0].artist);
+      console.log(response.results.albummatches.album[0].name);
+      console.log(response.results.albummatches.album[1].name);
+      console.log(response.results.albummatches.album[2].name);
+      console.log(response.results.albummatches.album[0].url);
+     // console.log(response.results.albummatches.album[0].image[0][#text];
+
+      var tr = $('<tr>')
+      var tdArt = $('<td>')
+      var tdName = $('<td>')
+      var tdLink = $('<td>')
+
+      var art = response.results.albummatches.album[0].artist
+      tdArt.text(art)
+      tr.append(tdArt)
+      $('tbody').append(tr)
+
+
+      var name = response.results.albummatches.album[0].name
+      tdName.text(name)
+      tr.append(tdName)
+      $('tdbody').append(tr)
+
+      var link = response.results.albummatches.album[0].url
+      tdLink.text(link)
+      tr.append(tdLink)
+      $('tdbody').append(tr)
+
+      // Append the td elements to the new table row
+      // Append the table row to the tbody element
+    });
+
+  </script>
+</body>
 </html>
