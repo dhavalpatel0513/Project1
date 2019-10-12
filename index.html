@@ -1,3 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>GT-Project-1-Group8</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+  <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+
+<body>
+
+  <div class="jumbotron">
+    <h1 class="display-4">GT-Project-1-Group8</h1>
+    <p class="lead">
+      It's time to make project let's do it TOGETHER!!!
+    </p>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+ <script type="text/javascript">
+   // constructing a queryURL variable we will use instead of the literal string inside of the ajax method
+   var queryURL = "https://www.googleapis.com/youtube/v3/search?part=snippet&key=AIzaSyD5YCV1hKtkUYix5yoQFs_gx9fzJV-osWs";
+
+
+
+  // https://app.ticketmaster.com/discovery/v2/events?apikey=nnA0eOvGriBaGMlYbDCKaOnntD9G2Ijt&locale=*
+   $.ajax({
+     url: queryURL,
+     method: "GET"
+   }).then(function(response) {
+     console.log(response);
+     
+   });
+ </script>
+</body>
+
+</html>
 
 <!-- Eric Goldstein, Karen Gertenbach, Maria Kuznetsova, Jeffrey Phelps - 
     DU Web Dev Bootcamp 2017/2018 - Week-8 Homework - Project 1 -->
