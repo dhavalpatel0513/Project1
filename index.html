@@ -1,129 +1,153 @@
 <!DOCTYPE html>
-<html lang="en">
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <title>GT-Project-1-Group8</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
-  <link rel="stylesheet" href="./assets/css/style.css">
-</head>
+<html lang="en-us">
+
+    <head>
+        
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+      <title>Music + Event</title>
+      <link rel="shortcut icon" type="image/png" href="assets/images/guitar.jpg">
+      
+      <!-- Local CSS Normalizer File -->
+      <link rel="stylesheet" href="assets/style/normalize.css" type="text/css" />
+      
+      <!-- Remote Bootstrap CSS Library -->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+      <!-- Local CSS Stylesheet -->
+      <link rel="stylesheet" href="assets/style/style.css">
+
+      <!-- Local Font-Awesome CSS Library -->
+      <link rel="stylesheet" href="assets/font-awesome/font-awesome.css">
+
+      <!-- Remote moment.js Library -->
+      <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+
+      <!-- Remote Google Fonts Reference -->
+      <link href="https://fonts.googleapis.com/css?family=Righteous&display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css?family=Ubuntu&display=swap" rel="stylesheet">
+    </head>
+
+    <body>
+
+        <!-- Main Container -->
+        <div class ="container-fluid">
+
+            <!-- Header -->
+            <div class ="jumbotron">
+                <div class="text-center title">Music + Event</div> <br>
+            </div>
+
+            <!-- Body -->
+            <div class="row" id="topRow">
+
+                <!-- Left Column -->
+                <div class="col-sm-12 col-md-6 col-lg-6">
+
+                    <!-- Body Panel Left -->
+                    <div class="panel panelOne">
+
+                        <div class="panel-heading">
+                            <h3 class="panel-title"> <strong>Artist Search</strong></h3>
+                        </div>
+
+                        <div class="panel-body panelBodyOne">
+                            <section>
+                                <form id="search-form" name="search-form" onsubmit="return search()">
+                                    <div class="field container">
+                                        <input type="search" id="query" class="search-field" required="reguired" placeholder="Artist">
+                                        <input type="submit" name="search-btn" id="search-btn" value="Search">
+                                    </div>
+                                </form>
+                            </section>
+                            <br>
+                            <div id="dataDrop1"></div>
+                            <div id="dataDrop2"></div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Right Column -->
+                <div class="col-sm-12 col-md-6 col-lg-6">
+                    
+                    <!-- Body Panel Right -->
+                    <div class="panel panelTwo">
+
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><i class="fa fa-calendar" aria-hidden="true"></i> <strong>Event Locator</strong></h3>
+                        </div>
+
+                        <div class="panel-body">
+                            <div id="dataDrop4">
+                                <div id="events">
+                                    <div id="maps">
+                                    </div>
+                                    <div id="locations">
+                                    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Bottom Column -->
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    
+                    <!-- Body Panel Right -->
+                    <div class="panel panelThree">
+
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><i class="fa fa-video-camera" aria-hidden="true"></i> <strong>Videos</strong></h3>
+                        </div>
+
+                        <div class="panel-body">
+                            <div id="dataDrop3">
+                                <ul id="results"></ul>
+                                <div id="buttons"></div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+                
+        </div>
+
+        <!-- Footer -->
+        <div id="footer">
+                
+            <div id="footerText">
+                <p><i class="fa fa-copyright" aria-hidden="true"></i> Copyright Music + Event 2019</p>
+            </div>
+
+        </div>
+
+        <!-- Remote jQuery Library -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+        <!-- Remote Firebase API -->
+        <script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>
 
 
+        <!-- Google Maps API -->
+         <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmYHEQwXA3bucxiXU2-23Dx-PnAOAO6NA&callback=initMap">
+        </script>
+        
+        <!-- Local JavaScript File -->
+        <script src="assets/javascript/app.js"></script>
+        <!-- <script src="assets/javascript/firebase.js"></script> -->
 
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
-<!-- <script type="text/javascript">
-   // constructing a queryURL variable we will use instead of the literal string inside of the ajax method
-   var queryURL = "https://api.deezer.com/album/302127"; -->
-<!-- // https://api.deezer.com/version/service/id/method/?album&key=1aca00bad4b38f88769d91e5f474b43d
-//    $.ajax({
-//      url: queryURL,
-//      method: "GET"
-//    }).then(function(response) {
-//      console.log(response);
-     
-//    });
-//  </script> -->
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
- <script type="text/javascript">
-   // constructing a queryURL variable we will use instead of the literal string inside of the ajax method
-   var queryURL = "https://www.googleapis.com/youtube/v3/search?part=snippet&key=AIzaSyD5YCV1hKtkUYix5yoQFs_gx9fzJV-osWs";
-  // https://app.ticketmaster.com/discovery/v2/events?apikey=nnA0eOvGriBaGMlYbDCKaOnntD9G2Ijt&locale=*
-   $.ajax({
-     url: queryURL,
-     method: "GET"
-   }).then(function(response) {
-     console.log(response);
-     
-   });
- </script> -->
+    </body>
 
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script type="text/javascript">
-    // constructing a queryURL variable we will use instead of the literal string inside of the ajax method
-    var keyword = "beyonce"
-   // var queryURL = "https://app.ticketmaster.com/discovery/v2/events" + keyword + "?apikey=nnA0eOvGriBaGMlYbDCKaOnntD9G2Ijt&locale=*";
-    var queryURL = "https://app.ticketmaster.com/discovery/v2/events.json?" + keyword + "countryCode=US&apikey=nnA0eOvGriBaGMlYbDCKaOnntD9G2Ijt";
-   // https://app.ticketmaster.com/discovery/v2/events?apikey=nnA0eOvGriBaGMlYbDCKaOnntD9G2Ijt&locale=*
-  // https://app.ticketmaster.com/discovery/v2/events.json?keyword=devjam&source=universe&countryCode=US&apikey=nnA0eOvGriBaGMlYbDCKaOnntD9G2Ijt
-    $.ajax({
-      url: queryURL,
-      method: "GET"
-    }).then(function(response) {
-      console.log(response);
-      console.log(response._embedded.events[1].url);
-     
-
-    });
-
-  </script> -->
-
-<body>
-  <div class="container">
-    <h2>Basic Table</h2>
-    <p>The .table class adds basic styling (light padding and only horizontal dividers) to a table:</p>
-    <table class="table">
-      <thead>
-        <tr>
-          <!-- The scope attribute specifies that this is a header for a column -->
-          <th scope="col">Artist</th>
-          <th scope="col">Album Name</th>
-          <th scope="col">Link</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Interstellar</td>
-          <td>2014</td>
-          <td>Ellen Burstyn, Matthew McConaughey, Mackenzie Foy, John Lithgow</td>
-        </tr>
-        <!-- Insert additional movie rows here -->
-      </tbody>
-    </table>
-  </div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script type="text/javascript">
-    var Artist = "jayz"
-    var queryURL = 'http://ws.audioscrobbler.com/2.0/?method=album.search&album=' + Artist + '&api_key=4b65d4702229dfc7814d6f12bc1000d6&format=json';
-    $.ajax({
-      url: queryURL,
-      method: "GET"
-    }).then(function (response) {
-      console.log(response);
-      console.log(response.results.albummatches.album[0].artist);
-      console.log(response.results.albummatches.album[0].name);
-      console.log(response.results.albummatches.album[1].name);
-      console.log(response.results.albummatches.album[2].name);
-      console.log(response.results.albummatches.album[0].url);
-     // console.log(response.results.albummatches.album[0].image[0][#text];
-
-      var tr = $('<tr>')
-      var tdArt = $('<td>')
-      var tdName = $('<td>')
-      var tdLink = $('<td>')
-
-      var art = response.results.albummatches.album[0].artist
-      tdArt.text(art)
-      tr.append(tdArt)
-      $('tbody').append(tr)
-
-
-      var name = response.results.albummatches.album[0].name
-      tdName.text(name)
-      tr.append(tdName)
-      $('tdbody').append(tr)
-
-      var link = response.results.albummatches.album[0].url
-      tdLink.text(link)
-      tr.append(tdLink)
-      $('tdbody').append(tr)
-
-      // Append the td elements to the new table row
-      // Append the table row to the tbody element
-    });
-
-  </script>
-</body>
 </html>
