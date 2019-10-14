@@ -214,6 +214,7 @@ function search(artist) {
     
 // Querying  api for the input artist
 var inputArtist;
+
 var queryURL = 'http://ws.audioscrobbler.com/2.0/?method=album.search&album=' + artist + '&api_key=4b65d4702229dfc7814d6f12bc1000d6&format=json';
     $.ajax({
         url: queryURL,
