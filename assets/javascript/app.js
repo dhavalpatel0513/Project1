@@ -261,7 +261,7 @@ $.ajax({
         eventInfo2 = (`<h4> City: ${venueCity}</h4>`);
         eventInfo3 = (`<h4> Venue Name: ${venueName} </h4>`);
         eventInfo4 =(`<h4> Date: ${eventDateFormat} </h4>`);
-        eventInfo5 =(`<h4> Ticket Link: ${TicketLink.innerHTML} </h4>`);
+        eventInfo5 =(`<h4> Ticket Link: ${getTickets} </h4>`);
        
         //appending events   
         $("#locations").append(eventInfo1,eventInfo2,eventInfo3,eventInfo4,eventInfo5);
