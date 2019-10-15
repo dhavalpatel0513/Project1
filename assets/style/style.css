@@ -17,7 +17,7 @@
  */
 
 /* For Main Heading Animation create variable for color */
-:root {
+ :root {
     --gradient: linear-gradient(
         90deg, 
         #845ec2,
@@ -55,11 +55,7 @@ h1 {
 }
 
 .panelOne {
-    background: url(/assets/images/background.jpg) no-repeat center center fixed; 
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
+    background-image: url('/assets/images/background.jpeg');
 }
 
 
