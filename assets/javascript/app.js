@@ -1,13 +1,17 @@
-// Eric Goldstein, Karen Gertenbach, Maria Kuznetsova, Jeffrey Phelps - 
-// DU Web Dev Bootcamp 2017/2018 - Week-8 Homework - Project 1
+// show alert when page is refreshed
+$(document).ready(function() {
+    alert("Put In Your Favorite Artist!!");
+    search(inputArtist);
+    $("#locations").append(`<h4 id="locationsTitle">Event locations:</h4>`);
+    searchEvent(inputArtist);
+    searchyoutube(inputArtist);
+    videoArtist = inputArtist;
 
-
-// ******************************************************************* //
-
-
+  });
+  //set variables for artist names
 var venueLatitude;
 var venueLongitude;
-var artistName; //holds artist's name from response.name
+var artistName; 
 var contentVisible; //holds true or false value for function to show or hide content
 
 
@@ -30,7 +34,7 @@ $(function() {
 
 });
 
-function search(artist) {
+function searchyoutube(artist) {
 
     // clear 
     $('#results').html('');
@@ -41,7 +45,7 @@ function search(artist) {
 
     $.ajax({
         method: 'GET',
-        url: `https://www.googleapis.com/youtube/v3/search?&part=snippet,id&q=${artist}&type=video&key=${gapikey}`,
+        url: `https://www.googleapis.com/youtube/v3/search?part=snippet,id&q=${artist}&type=video&key=${gapikey}`,
         headers: 'Access-Control-Allow-Origin'
     }).done((data)=>{
         console.log(data);
@@ -78,11 +82,11 @@ function nextPage() {
     $('#buttons').html('');
     
     // get form input
-    q = $('#query').val();  // this probably shouldn't be created as a global
+    q = $('#query').val();  
     
     // run get request on API
     $.get(
-        `https://www.googleapis.com/youtube/v3/search?&part=snippet,id&q=${videoArtist}&type=video&key=${gapikey}`, {
+        `https://www.googleapis.com/youtube/v3/search?part=snippet,id&q=${videoArtist}&type=video&key=${gapikey}`, {
             part: 'snippet, id',
             q: q,
             pageToken: token,
@@ -127,7 +131,7 @@ function prevPage() {
     
     // run get request on API
     $.get(
-        `https://www.googleapis.com/youtube/v3/search?&part=snippet,id&q=${videoArtist}&type=video&key=${gapikey}`, {
+        `https://www.googleapis.com/youtube/v3/search?part=snippet,id&q=${videoArtist}&type=video&key=${gapikey}`, {
             part: 'snippet, id',
             q: q,
             pageToken: token,
@@ -202,18 +206,16 @@ function getButtons(prevPageToken, nextPageToken) {
 };
 
 
-// ******************************************************************* //
 
 
-// ******************************************************************* //
+// Last.fm AJAX - API
 
-// Bands In Town AJAX - API
+function search(artist) {
+    
+// Querying  api for the input artist
+var inputArtist;
 
-function searchBandsInTown(artist) {
-
-// Querying the bandsintown api for the selected artist, the ?app_id parameter is required, but can equal anything
-var queryURL = "https://rest.bandsintown.com/artists/" + artist + "?app_id=codingbootcamp";
-
+var queryURL = 'http://ws.audioscrobbler.com/2.0/?method=album.search&album=' + artist + '&api_key=4b65d4702229dfc7814d6f12bc1000d6&format=json';
     $.ajax({
         url: queryURL,
         method: "GET"
@@ -224,42 +226,32 @@ var queryURL = "https://rest.bandsintown.com/artists/" + artist + "?app_id=codin
         console.log(response);
 
 
-        artistName = $("<h1>").text(response.name);
-        var artistURL = $("<a>").attr("href", response.url).append(artistName).attr("target", "_blank");
-        var artistImage = $("<img>").attr("src", response.thumb_url);
-        var trackerCount = $("<h3>").text(response.tracker_count + " fans tracking this artist");
-        var upcomingEvents = $("<h3>").text(response.upcoming_event_count + " upcoming events");
-        var goToArtist = $("<a>").attr("href", response.url).attr("target", "_blank");
-         // goToArtist.append(`<i class="far fa-calendar-alt"></i>`);
-        // var facebookPage = $("<a>").attr("href", response.facebook_page_url).attr("target", "_blank");
-        // facebookPage.append(`<i class="fa fa-facebook-official" style="font-size:100px"></i>`);
-        // var facebookText = $("<h4>").text(" Facebook Page ");
-        var goToArtist = $("<a>").attr("href", response.url);
- 
+       // artistName = $("<h1>").text(response.results.albummatches.album[0].artist);
+        artistName = $("<h1>").text(response.results.albummatches.album[0].artist);
+        
+        var name = $("<h2>").text(response.results.albummatches.album[0].name);
+        var artistURL = $("<a>").attr("href",response.results.albummatches.album[0].url).append(artistName);
+        var artistImage = $("<img>").attr("src", response.results.albummatches.album[0]);
+        
         // Empty the contents of the artist-div, append the new artist content
         $("#dataDrop1").empty();
-        // $("#dataDrop2").empty();
         $("#dataDrop1").append(artistURL, artistImage);
-        // $("#dataDrop2").append(facebookPage); 
-        // if(response.facebook_page_url != "")
-        // {
-        //  $("#dataDrop2").append(facebookPage);
-        // }
-        // $("#dataDrop2").append(goToArtist);
+        
       });
   };
   
      $("#search-btn").on("click", function(event) {
+        event.preventDefault();
         var inputArtist =$("#query").val().trim();
         console.log(inputArtist);
-        searchBandsInTown(inputArtist);
+        search(inputArtist);
         
          //clearing events div and appending title
         $("#locations").empty();
         $("#locations").append(`<h4 id="locationsTitle">Event locations:</h4>`);
-
-        search(inputArtist);
         searchEvent(inputArtist);
+        searchyoutube(inputArtist);
+        
   });
 
 
@@ -277,12 +269,11 @@ $.ajax({
     console.log(response);
 
     var eventInfo;
-//     var venueName;
     var eventDate;
-//     var venueCity;
-//     var venueCountry;
     var mapLink;
     var eventDateFormat;
+    var getTickets;
+    var TicketLink = $("<a>")
     
 
         for (var index = 0; index < response.length; index++) {
@@ -291,17 +282,22 @@ $.ajax({
         eventDate = response[index].datetime;
         venueCity = response[index].venue.city;
         venueCountry = response[index].venue.country;
+        getTickets = response[index].url;
+        TicketLink.attr("href",getTickets);
+        TicketLink.html(getTickets);
         venueLatitude = parseFloat(response[index].venue.latitude);
         venueLongitude = parseFloat(response[index].venue.longitude);
         eventDateFormat = moment(eventDate).format("MMMM DD YYYY HH:mm");
 
 
-        eventInfo = (`<h4>${venueCountry} ${venueCity} ${venueName} ${eventDateFormat}</h4>`);
-
-
+        eventInfo1 = (`<h4> Country: ${venueCountry} </h4>`);
+        eventInfo2 = (`<h4> City: ${venueCity}</h4>`);
+        eventInfo3 = (`<h4> Venue Name: ${venueName} </h4>`);
+        eventInfo4 =(`<h4> Date: ${eventDateFormat} </h4>`);
+        eventInfo5 =(`<h4> Ticket Link: ${getTickets} </h4>`);
        
         //appending events   
-        $("#locations").append(eventInfo);
+        $("#locations").append(eventInfo1,eventInfo2,eventInfo3,eventInfo4,eventInfo5);
 
         // creating map buttons  
         var mapBtn = $("<button>").text("See it on map");
@@ -331,7 +327,7 @@ $.ajax({
 
     })
      
-     // function to deal with empty input or if artist does not exist in the Bands in Town database
+     // function to deal with empty input 
      .fail(function(){
     contentVisible = false;
     showOrHide();
@@ -341,7 +337,7 @@ $.ajax({
     $("#dataDrop1").html(`<h3 id="failArtist">Artist not found</h3>`);
     $("#locations").empty();
     });
-
+    
 
 
 };
@@ -382,29 +378,4 @@ $.ajax({
     }
 
 }; 
-
-
-// Calling an initial Artist on page load
-
-var initialArtists = ["Metallica", "A7X", "U2", "Offspring", "Bruno Mars", "Boz Scaggs", "Katy Perry", 
-                        "Wyclef Jean", "Kid Rock", "Collective Soul", "Bryan Adams", "Kenny Chesney", 
-                        "Rod Stewart", "Maroon 5", "Foreigner", "Shania Twain", "Beats Antique", "pink", 
-                        "Brit Floyd", "Janet Jackson", "Justin Timberlake", "Eminem", "Foo Fighters"];
-var initialArtist = initialArtists[Math.floor(Math.random() * initialArtists.length)];
-
-$(document).ready(function() {
-
-    searchBandsInTown(initialArtist);
-    $("#locations").append(`<h4 id="locationsTitle">Event locations:</h4>`);
-    searchEvent(initialArtist);
-    search(initialArtist);
-    videoArtist = initialArtist;
-
-  });
-  
-
-
-// ******************************************************************* //
- 
-
 
