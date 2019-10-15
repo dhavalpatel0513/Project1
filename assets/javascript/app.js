@@ -6,43 +6,30 @@ $(document).ready(function() {
     searchEvent(inputArtist);
     searchyoutube(inputArtist);
     videoArtist = inputArtist;
-
   });
   //set variables for artist names
 var venueLatitude;
 var venueLongitude;
 var artistName; 
 var contentVisible; //holds true or false value for function to show or hide content
-
-
 // Google/Youtube video finder AJAX - API
-
 var videoArtist;
-
 $("#search-btn").on("click", function() {
     videoArtist =$("#query").val();
 });
-
-
 var gapikey = 'AIzaSyCKMpw2nmPnon_gkh4EIXnbiAmrZNw-v4M';
-
 $(function() {
-
     $('#search-form').submit( function(e) {
         e.preventDefault();
     });
-
 });
-
 function searchyoutube(artist) {
-
     // clear 
     $('#results').html('');
     $('#buttons').html('');
     
     // get form input
     q = $('#query').val();
-
     $.ajax({
         method: 'GET',
         url: `https://www.googleapis.com/youtube/v3/search?part=snippet,id&q=${artist}&type=video&key=${gapikey}`,
@@ -70,7 +57,6 @@ function searchyoutube(artist) {
             $('#buttons').append(buttons);
     });
  };
-
 // Next page function
 function nextPage() {
     var token = $('#next-button').data('token');
@@ -115,7 +101,6 @@ function nextPage() {
             $('#buttons').append(buttons);
         });    
 };
-
 // Previous page function
 function prevPage() {
     var token = $('#prev-button').data('token');
@@ -160,10 +145,8 @@ function prevPage() {
             $('#buttons').append(buttons);
         });    
 };
-
 // Build output
 function getOutput(item) {
-
     var videoID = item.id.videoId;
     var title = item.snippet.title;
     var description = item.snippet.description;
@@ -172,7 +155,7 @@ function getOutput(item) {
     var videoDate = item.snippet.publishedAt;
     
     // Build output string
-    var output = 	'<li>' +
+    var output =    '<li>' +
                         '<div class="list-left">' +
                             '<img src="' + thumb + '">' +
                         '</div>' +
@@ -186,15 +169,14 @@ function getOutput(item) {
                     '';
     return output;
 };
-
 function getButtons(prevPageToken, nextPageToken) {
     if(!prevPageToken) {
-        var btnoutput = 	'<div class="button-container">' +
+        var btnoutput =     '<div class="button-container">' +
                                 '<button id="next-button" class="paging-button" data-token="' + nextPageToken + '" data-query="' + q + '"' +
                                     'onclick = "nextPage();">Next Page</button>' +
                             '</div>';
     } else {
-        var btnoutput = 	'<div class="button-container">' +
+        var btnoutput =     '<div class="button-container">' +
                                 '<button id="prev-button" class="paging-button" data-token="' + prevPageToken + '" data-query="' + q + '"' +
                                     'onclick = "prevPage();">Prev Page</button>' +            
                                 '<button id="next-button" class="paging-button" data-token="' + nextPageToken + '" data-query="' + q + '"' +
@@ -204,17 +186,11 @@ function getButtons(prevPageToken, nextPageToken) {
     
     return btnoutput;
 };
-
-
-
-
 // Last.fm AJAX - API
-
 function search(artist) {
     
 // Querying  api for the input artist
 var inputArtist;
-
 var queryURL = 'http://ws.audioscrobbler.com/2.0/?method=album.search&album=' + artist + '&api_key=4b65d4702229dfc7814d6f12bc1000d6&format=json';
     $.ajax({
         url: queryURL,
@@ -224,8 +200,6 @@ var queryURL = 'http://ws.audioscrobbler.com/2.0/?method=album.search&album=' + 
         showOrHide();
         // Printing the entire object to console
         console.log(response);
-
-
        // artistName = $("<h1>").text(response.results.albummatches.album[0].artist);
         artistName = $("<h1>").text(response.results.albummatches.album[0].artist);
         
@@ -253,60 +227,50 @@ var queryURL = 'http://ws.audioscrobbler.com/2.0/?method=album.search&album=' + 
         searchyoutube(inputArtist);
         
   });
-
-
  function searchEvent(artist) {
-
     var queryURL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp"
-
 $.ajax({
     url: queryURL,
     method: "GET"
-
 }).done(function(response) {
     contentVisible = true;
     showOrHide();
     console.log(response);
-
     var eventInfo;
     var eventDate;
     var mapLink;
     var eventDateFormat;
     var getTickets;
-    var TicketLink = $("<a>")
+    var TicketLink = $("<a>");
     
-
         for (var index = 0; index < response.length; index++) {
+            console.log(getTickets);
+            
         
         venueName = response[index].venue.name;
         eventDate = response[index].datetime;
         venueCity = response[index].venue.city;
         venueCountry = response[index].venue.country;
         getTickets = response[index].url;
-        TicketLink.attr("href",getTickets);
-        TicketLink.html(getTickets);
+        TicketLink.attr("href",response[index].url);
+        TicketLink.text(getTickets);
         venueLatitude = parseFloat(response[index].venue.latitude);
         venueLongitude = parseFloat(response[index].venue.longitude);
         eventDateFormat = moment(eventDate).format("MMMM DD YYYY HH:mm");
-
-
         eventInfo1 = (`<h4> Country: ${venueCountry} </h4>`);
         eventInfo2 = (`<h4> City: ${venueCity}</h4>`);
         eventInfo3 = (`<h4> Venue Name: ${venueName} </h4>`);
         eventInfo4 =(`<h4> Date: ${eventDateFormat} </h4>`);
-        eventInfo5 =(`<h4> Ticket Link: ${getTickets} </h4>`);
+        eventInfo5 =(`<h4> Ticket Link: ${TicketLink.innerHTML} </h4>`);
        
         //appending events   
         $("#locations").append(eventInfo1,eventInfo2,eventInfo3,eventInfo4,eventInfo5);
-
         // creating map buttons  
         var mapBtn = $("<button>").text("See it on map");
         mapBtn.addClass("map-btn");
         mapBtn.attr('data-lat', venueLatitude);
         mapBtn.attr('data-long', venueLongitude);
         $("#locations").append(mapBtn);
-
-
         
         }; // loop closing
             
@@ -314,9 +278,7 @@ $.ajax({
             $(".map-btn").on("click", function(){
             const lat = $(this).attr('data-lat')
             const long = $(this).attr('data-long');
-
             initMap(+lat, +long);
-
             }); 
     
             // what happens if the artist has no upcoming events
@@ -324,7 +286,6 @@ $.ajax({
             $("#locations").empty();
             $("#locations").html(`<h3 id="locationsTitle">This band has no upcoming events but you can check out their amazing videos below</h3>`);
         };
-
     })
      
      // function to deal with empty input 
@@ -338,11 +299,7 @@ $.ajax({
     $("#locations").empty();
     });
     
-
-
 };
-
-
 //Map function
       function initMap(latitude = 39.7392, longitude = -104.9903){
           
@@ -351,7 +308,6 @@ $.ajax({
           zoom: 15,
           center: {lat: latitude, lng: longitude}
         }
-
         //New map
         var map = new google.maps.Map(document.getElementById('maps'), mapOptions);
           
@@ -360,32 +316,16 @@ $.ajax({
           position: {lat: latitude, lng: longitude},
           map: map
         });
-
       }    
   
 // function to hide all content if there is no input or no artist found 
  function showOrHide() {
-
      if (contentVisible == false) {
-
         $("#events").hide();
         $("#dataDrop3").hide();
     }
-
     if (contentVisible == true) {
         $("#events").show();
         $("#dataDrop3").show();
     }
-
 }; 
-
-
-
-
-  
-
-
-
- 
-
-
