@@ -92,6 +92,12 @@ h1 {
 }
 
 
+.panelOne {
+    background-image: url(/assets/images/background.jpg);
+}
+
+
+
 .subTitle {
     font-family: 'Indie Flower', sans-serif;
     font-size: 33px;
